@@ -26,7 +26,7 @@ DLL_PUBLIC void plugin_rb_tree_node_insert(plugin_rb_tree_DEF* ptr_rb_tree,plugi
 			ptr_temp=&((*ptr_temp)->right);
 		}
 	}
-	__rb_header_insert_fix_RBT(*ptr_temp,ptr_rb_tree->root,nil_ptr);
+	__rb_header_insert_fix_RBT(*ptr_temp,&ptr_rb_tree->root,nil_ptr);
 	return;
 }
 DLL_PUBLIC void plugin_rb_tree_inorder_traversal(plugin_rb_tree_DEF* ptr_plugin_rb_tree)
@@ -112,7 +112,7 @@ DLL_LOCAL void __plugin_rb_tree_replace_plugin_rb_linked_list_inorder(rb_header_
 		__plugin_rb_tree_replace_plugin_rb_linked_list_inorder(ptr_rb_node->right,nil_ptr,ptr_plugin_list);
 	}
 }
-DLL_LOCAL void __rb_header_insert_fix_RBT(rb_header_DEF* current,rb_header_DEF* root,rb_header_DEF* nil_ptr)
+DLL_LOCAL void __rb_header_insert_fix_RBT(rb_header_DEF* current,rb_header_DEF** root,rb_header_DEF* nil_ptr)
 {
 	 
     while (current->parent->color==red) {   
@@ -156,9 +156,9 @@ DLL_LOCAL void __rb_header_insert_fix_RBT(rb_header_DEF* current,rb_header_DEF* 
             }
         }
     }
-    root->color = black;
+    (*root)->color = black;
 }
-DLL_LOCAL void __rb_header_LeftRotation(rb_header_DEF* x,rb_header_DEF* root,rb_header_DEF* nil_ptr)
+DLL_LOCAL void __rb_header_LeftRotation(rb_header_DEF* x,rb_header_DEF** root,rb_header_DEF* nil_ptr)
 {
  	rb_header_DEF *y = x->right;         
     x->right = y->left;        
@@ -167,7 +167,7 @@ DLL_LOCAL void __rb_header_LeftRotation(rb_header_DEF* x,rb_header_DEF* root,rb_
     }
     y->parent = x->parent;               
     if (x->parent == nil_ptr){              
-        root = y;          
+        *root = y;          
     }       
     else if (x == x->parent->left){ 
         x->parent->left = y;        
@@ -178,7 +178,7 @@ DLL_LOCAL void __rb_header_LeftRotation(rb_header_DEF* x,rb_header_DEF* root,rb_
     y->left = x;                   
     x->parent = y;                       
 }	
-DLL_LOCAL void __rb_header_RightRotation(rb_header_DEF* x,rb_header_DEF* root,rb_header_DEF* nil_ptr)
+DLL_LOCAL void __rb_header_RightRotation(rb_header_DEF* x,rb_header_DEF** root,rb_header_DEF* nil_ptr)
 {
  	rb_header_DEF *y = x->left;         
     x->left = y->right;        
@@ -187,7 +187,7 @@ DLL_LOCAL void __rb_header_RightRotation(rb_header_DEF* x,rb_header_DEF* root,rb
     }
     y->parent = x->parent;               
     if (x->parent == nil_ptr){              
-        root = y;          
+        *root = y;          
     }       
     else if (x == x->parent->left){ 
         x->parent->left = y;        

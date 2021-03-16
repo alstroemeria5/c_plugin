@@ -38,9 +38,9 @@ extern plugin_rb_node_DEF* plugin_rb_node_alloc_init(plugin_DEF* ptr_plugin,rb_h
 extern void plugin_rb_tree_inorder_traversal(plugin_rb_tree_DEF* ptr_plugin_rb_tree);
 extern void __plugin_rb_tree_inorder_traversal(rb_header_DEF* ptr_rb_node,rb_header_DEF* nil_ptr);
 
-extern void __rb_header_insert_fix_RBT(rb_header_DEF* current,rb_header_DEF* root,rb_header_DEF* nil_ptr);
-extern void __rb_header_LeftRotation(rb_header_DEF* x,rb_header_DEF* root,rb_header_DEF* nil_ptr);
-extern void __rb_header_RightRotation(rb_header_DEF* x,rb_header_DEF* root,rb_header_DEF* nil_ptr);
+extern void __rb_header_insert_fix_RBT(rb_header_DEF* current,rb_header_DEF** root,rb_header_DEF* nil_ptr);
+extern void __rb_header_LeftRotation(rb_header_DEF* x,rb_header_DEF** root,rb_header_DEF* nil_ptr);
+extern void __rb_header_RightRotation(rb_header_DEF* x,rb_header_DEF** root,rb_header_DEF* nil_ptr);
 #ifdef __cplusplus
 {
 #endif
