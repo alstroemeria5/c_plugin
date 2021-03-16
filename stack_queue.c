@@ -48,7 +48,7 @@ DLL_PUBLIC int dequeue(queue_DEF* ptr_queue)
 	if(*front==NULL){
 		return queue_empty;
 	}
-	if((*front==*rear)&&(*front!=NULL)){
+	if((*front==*rear)){
 		temp=(*front)->data;
 		node_free(front);
 		*front=NULL;

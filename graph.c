@@ -38,8 +38,8 @@ DLL_PUBLIC two_d_Matrix_DEF* adjacency_mat_to_edge_alloc_init(two_d_Matrix_DEF* 
 }
 DLL_PUBLIC two_d_Matrix_DEF* edge_to_adjacency_mat_alloc_init(two_d_Matrix_DEF* edge)
 {
-	int first=INT_MIN;
-	int second=INT_MIN;
+	int first;
+	int second;
 	int row=edge->row;
 	int column=edge->column;
 	int max=INT_MIN;
@@ -144,9 +144,9 @@ DLL_PUBLIC void graph_free(graph_DEF** ptr_graph)
 	int num_vertex=(*ptr_graph)->num_vertex;
 	for(int i=0;i<num_vertex;i++){
 		vertex_DEF* ptr_vertex=&((*ptr_graph)->array[i]);
-		vertex_DEF* ptr_temp;
 		vertex_DEF* ptr_head=ptr_vertex->next;
 		while(ptr_head!=NULL){
+			vertex_DEF* ptr_temp;
 			ptr_temp=ptr_head;
 			ptr_head=ptr_head->next;
 			free(ptr_temp);		
