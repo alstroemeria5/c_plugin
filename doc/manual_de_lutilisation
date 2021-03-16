@@ -1,0 +1,14 @@
+valgrind --leak-check=full --show-leak-kinds=all ./a.out
+valgrind -v --leak-check=full --show-leak-kinds=definite ./a.out
+comment: -v verbose 
+	 --show-leak-kinds=definite shows only definite loss which is pretty much the most important part of memory leak since
+				    most of the indirect loss comes from definite loss of pointers. Resolving definite loss is,most				       of time,resolving indirect loss.			
+comment: as for node in data structure,whether it's leaf in binary tree or node in linked list,etc. Valgrind seems to be unable to 		keep track if the node can be access via the entry point of the data structure. Therefore,once a data structure is pro		-posed,there show some definite loss.However,such definite loss is not really loss once those pertinent pointers are plac	  ed on heap and further valgrind test shows no leap on heap. It's of great point of importance to code both allocation and 		deallocation function for objects.
+ 
+gcc -DLIB_CONCISE -o libplugin.so -shared -fPIC plugin.c -fvisibility=hidden -ldl
+commnet: -DLIB_CONCISE --> macro LIB_CONCISE exists
+	 -fPIC --> function is position independent code for future shared library use
+	 -shared --> library require dynamic loader to resolve
+	 -fvisibility=hidden --> set all function visibility to hidden which means we are building dynamic library with only symbols we denoted with __attribute__((visibility("default"))) to expose     others
+
+discovery: elf executable with LD_LIBRARY_PATH=. seems not to find shared library in the pwd obstensible which make me weired since in windows it's beyond question that excutable will discover library in the current folder

@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct treeNode {
+  void *data;
+  struct treeNode *left;
+  struct treeNode *right;
+}treeNode;
+
+treeNode * Insert(treeNode *node, void *data, int sizeOfType, int (*compare) (void *arg1, void *arg2)) { 
+  if(node==NULL) {
+    treeNode *temp;
+    temp = malloc(sizeof(*temp));
+    temp->data = malloc(sizeOfType);
+    memcpy(temp->data, data, sizeOfType);
+    temp -> left = temp -> right = NULL;
+    return temp;
+  }
+
+  if(compare(data, node->data) == 1) {
+    node->right = Insert(node->right, data, sizeof(int), compare(data, node->data));
+  }
+  else if(compare(data, node->data) == -1 || compare(data, node->data) == 0) {
+    node->left = Insert(node->left, data, sizeof(int), compare(data, node->data));
+  }
+  return node;
+}
+
+void print(void* a) { 
+printf("%d ",*(int*)a); 
+}
+
+void InorderGeneric(treeNode *node, void(*p)(void *)) { 
+  if (node != NULL) {                                
+    InorderGeneric(node->left, p);
+    p(node->data);  
+    InorderGeneric(node->right, p); 
+  }
+}
+
+int int_sorter( void *first_arg, void *second_arg ) {
+  int first = *(int*)first_arg;
+  int second = *(int*)second_arg;
+  if ( first < second ) {
+    return -1;
+  }
+  else if ( first == second ) {
+    return 0;
+  }
+  else {
+    return 1;
+  }
+}
+
+int main(void) {
+  treeNode *root = NULL;
+  int item;
+  void *v;
+
+  printf("Add nodes in binary tree:\n");
+  while (scanf("%d ", &item) == 1) {
+    v = &item;
+    root = Insert(root, v, sizeof(int), int_sorter);
+  }
+
+  printf("\n---Initial tree---\n");
+  printf("IN-order walk of tree:\n");
+  InorderGeneric(root, print);
+  printf("\n");
+
+  return 0;
+ }
