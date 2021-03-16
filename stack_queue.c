@@ -120,7 +120,7 @@ DLL_PUBLIC int top(stack_DEF* ptr_stack)
 	if(*front==NULL){
 		return stack_empty;
 	}
-	if((*front==*rear)&&(*front!=NULL)){
+	if((*front==*rear)){
 		temp=(*rear)->data;
 		node_free(rear);
 		*front=NULL;
